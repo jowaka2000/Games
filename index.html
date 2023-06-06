@@ -29,13 +29,45 @@
       border-radius: 8px;
       margin: 10px;
     }
+     /* CSS for the popup */
+     .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 999;
+    }
+
+    /* CSS for the overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 998;
+    }
   </style>
 </head>
 <body>
   <div id="container">
+
     <div id="scoreText">Score: 0</div>
     <div id="tilesContainer"></div>
   </div>
+
+    <!-- Popup HTML -->
+    <div class="overlay"></div>
+    <div class="popup" id="popupMessage">
+      <span id="popupText"></span>
+    </div>
 
   <script src="/script.js"></script>
 </body>

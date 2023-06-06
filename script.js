@@ -95,5 +95,57 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("scoreText").textContent = "Score: " + score;
     }
 
+    function flipTile(tile) {
+        if (!canFlip || tile.flipped) {
+          return;
+        }
+      
+        if (selectedTile) {
+          if (selectedTile.id !== tile.id && selectedTile.color === tile.color) {
+            const updatedTiles = tiles.map((t) =>
+              t.id === tile.id || t.id === selectedTile.id ? { ...t, flipped: true } : t
+            );
+            tiles = updatedTiles;
+            selectedTile = null;
+            score += 10;
+      
+            showPopupMessage("Success! You found a match!");
+          } else {
+            setTimeout(() => {
+              const updatedTiles = tiles.map((t) =>
+                t.id === tile.id || t.id === selectedTile.id ? { ...t, flipped: false } : t
+              );
+              tiles = updatedTiles;
+              selectedTile = null;
+              score -= 5;
+              renderTiles();
+      
+              showPopupMessage("Oops! Try again!");
+            }, 1000);
+          }
+        } else {
+          const updatedTiles = tiles.map((t) => (t.id === tile.id ? { ...t, flipped: true } : t));
+          tiles = updatedTiles;
+          selectedTile = tile;
+        }
+      
+        renderTiles();
+      }
+      
+      function showPopupMessage(message) {
+        const popup = document.getElementById("popupMessage");
+        const popupText = document.getElementById("popupText");
+        const overlay = document.querySelector(".overlay");
+
+        popupText.textContent = message;
+        popup.style.display = "block";
+        setTimeout(() => {
+            popup.style.display = "none";
+            overlay.style.display = "none";
+          }, 2000);
+      }
+      
+
+
     generateTiles();
   });
